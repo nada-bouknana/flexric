@@ -68,33 +68,22 @@ endif()
                       -ldl
                       )
 
+add_executable(xapp_srs_cpp
+                xapp_srs_ind.cpp
+                srs_fapi/debug.c
+                srs_fapi/nfapi.c
+                srs_fapi/srs_fapi_p7.c
+              )
 
-                      #add_executable(xapp_srs_channel
-                      #xapp_srs_channel.cpp
-                      #srs_fapi/debug.c
-                      #srs_fapi/nfapi.c
-                      #srs_fapi/srs_fapi_p7.c
-                      #"${GENERATED_HEADER}"
-                      #)
-                      #
-                      #target_include_directories(xapp_srs_channel PRIVATE  "${GENERATED_DIR}")
-                      #if (OAI_AERIAL)
-                      #target_compile_definitions(xapp_srs_channel PRIVATE ENABLE_AERIAL)
-                      #target_compile_definitions(xapp_srs_channel PRIVATE FAPI_BYTE_ORDERING_BIG_ENDIAN)
-                      #endif()
-                      #target_link_libraries(xapp_srs_channel
-                      #PRIVATE
-                      #flatbuffers
-                      #cppzmq
-                      #PUBLIC
-                      #e42_xapp
-                      #-pthread
-                      #-lsctp
-                      #-ldl
-                      #m
-                      #)
-                      #
-                      #add_executable(zmq_cl zmq_client.cpp "${GENERATED_HEADER}")
-                      #target_include_directories(zmq_cl PRIVATE  "${GENERATED_DIR}")
-                      #target_link_libraries(zmq_cl PRIVATE cppzmq flatbuffers)
-                      #
+if (OAI_AERIAL)
+target_compile_definitions(xapp_srs_cpp PRIVATE ENABLE_AERIAL)
+target_compile_definitions(xapp_srs_cpp PRIVATE FAPI_BYTE_ORDERING_BIG_ENDIAN)
+endif()
+ target_link_libraries(xapp_srs_cpp
+                      PUBLIC
+                        e42_xapp
+                        -pthread
+                        -lsctp
+                        -ldl
+                        m
+                     )
